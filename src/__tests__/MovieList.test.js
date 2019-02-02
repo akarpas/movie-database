@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import createStore from '../store';
 import MovieList from '../components/MovieList/'
 import { mount } from 'enzyme';
@@ -41,7 +42,9 @@ describe('loading popular movies', () => {
   beforeAll(async (done) => {
     wrapper = mount(
       <Provider store={store} initialState={initialState}>
-        <MovieList searchTerm={""}/>
+        <BrowserRouter>
+          <MovieList searchTerm={""}/>
+        </BrowserRouter>
       </Provider>
     )
     setTimeout(() => {
