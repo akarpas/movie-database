@@ -1,13 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import thunk from "redux-thunk";
 import createStore from '../store';
 import MovieList from '../components/MovieList/'
-import { getPopularMovies } from '../actions/movieDatabase';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
-const mockStore = configureStore([thunk]);
 const store = createStore({});
 const initialState = {
   movieDatabase: {
