@@ -16,3 +16,20 @@ export const getPopularMovies = () => dispatch  => {
       })
     })
 }
+
+export const searchMovies = (query) => (dispatch) => {
+  dispatch({
+    type: 'LOADING_MOVIES',
+    payload: 'result',
+  })
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`
+  fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    const { results } = data;
+    dispatch({
+      type: 'SET_SEARCH_MOVIES',
+      payload: { results, query }
+    })
+  })
+}
