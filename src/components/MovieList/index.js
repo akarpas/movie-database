@@ -41,7 +41,7 @@ class MovieList extends Component {
     const { moviesLoading, popularMoviesList, searchMoviesList } = this.props;
     const { isSearch } = this.state;
     const movies = isSearch ? searchMoviesList : popularMoviesList;
-    console.warn(movies);
+
     return (
       <div className={style.container}>
         {isSearch ? <h3>Results:</h3> : <h3>Popular Movies</h3>}
