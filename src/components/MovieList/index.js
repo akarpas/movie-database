@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPopularMovies } from '../../actions/movieDatabase';
+import {
+  getMoviesLoading, getPopularMoviesList, getSearchMoviesList, getSearchTerm,
+} from '../../reducers/movieDatabase';
+import { getPopularMovies, searchMovies } from '../../actions/movieDatabase';
+import FilmRollIcon from '../../icons/filmroll.png';
 
 import style from './index.module.scss';
 
@@ -10,29 +14,46 @@ class MovieList extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getPopularMovies();
+    const { getPopularMovies } = this.props;
+    getPopularMovies();
+  }
+
+  componentDidUpdate = (nextProps) => {
+    if (nextProps.searchTerm !== this.props.searchTerm) {
+      const { searchMovies } = this.props;
+      const { searchTerm } = this.props;
+      searchMovies(searchTerm)
+    }
   }
 
   componentWillReceiveProps = (nextProps) => {
     const { searchTerm } = nextProps;
-      this.setState((state) => {
-        if (searchTerm.length) {
-          return { ...state, isSearch: true };
-        }
-        return { ...state, isSearch: false };
-      });
+    this.setState((state) => {
+      if (searchTerm.length) {
+        return { ...state, isSearch: true };
+      }
+      return { ...state, isSearch: false };
+    });
   }
 
   render() {
-    const { moviesLoading, moviesList } = this.props;
+    const { moviesLoading, popularMoviesList, searchMoviesList } = this.props;
+    const { isSearch } = this.state;
+    const movies = isSearch ? searchMoviesList : popularMoviesList;
 
     return (
       <div className={style.container}>
-        {moviesLoading || !moviesList
-          ? <div>Loading...</div>
+        {isSearch ? <h3>Results:</h3> : <h3>Popular Movies</h3>}
+        {moviesLoading || !movies
+          ? (
+              <div>
+                <img className={style.loading} src={FilmRollIcon} alt="Loading..." />
+                <h4>Loading...</h4>
+              </div>
+            )
           : <div className={style.movies}>
               {
-                moviesList.map(movie => {
+                movies.filter(movie => movie.poster_path).map(movie => {
                   const { title, poster_path } = movie;
                   const imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
                   return (
@@ -53,12 +74,15 @@ class MovieList extends Component {
 }
 
 const mapStateToProps = state => ({
-  moviesLoading: state.movieDatabase.moviesLoading,
-  moviesList: state.movieDatabase.moviesList,
+  moviesLoading: getMoviesLoading(state),
+  popularMoviesList: getPopularMoviesList(state),
+  searchMoviesList: getSearchMoviesList(state),
+  savedSearchTerm: getSearchTerm(state)
 })
 
 const mapDispatchToProps = dispatch => ({
-  getPopularMovies: () => dispatch(getPopularMovies())
+  getPopularMovies: () => dispatch(getPopularMovies()),
+  searchMovies: (query) => dispatch(searchMovies(query)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieList);
