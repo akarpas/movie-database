@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   getMoviesLoading, getPopularMoviesList, getSearchMoviesList, getSearchTerm,
@@ -19,9 +20,9 @@ class MovieList extends Component {
   }
 
   componentDidUpdate = (nextProps) => {
-    if (nextProps.searchTerm !== this.props.searchTerm) {
+    const { searchTerm } = this.props;
+    if (nextProps.searchTerm !== searchTerm && searchTerm.length) {
       const { searchMovies } = this.props;
-      const { searchTerm } = this.props;
       searchMovies(searchTerm)
     }
   }
@@ -40,7 +41,7 @@ class MovieList extends Component {
     const { moviesLoading, popularMoviesList, searchMoviesList } = this.props;
     const { isSearch } = this.state;
     const movies = isSearch ? searchMoviesList : popularMoviesList;
-
+    console.warn(movies);
     return (
       <div className={style.container}>
         {isSearch ? <h3>Results:</h3> : <h3>Popular Movies</h3>}
@@ -54,15 +55,18 @@ class MovieList extends Component {
           : <div className={style.movies}>
               {
                 movies.filter(movie => movie.poster_path).map(movie => {
-                  const { title, poster_path } = movie;
+                  const { id, title, poster_path } = movie;
                   const imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
                   return (
-                    <div className={style.movieThumb}>
-                      <img
-                        className={style.poster}
-                        src={`${imageBaseUrl}${poster_path}`}
-                        alt={title}
-                      />
+                    <div className={style.movieThumb} key={`${id}-thumb`}>
+                      <Link to={`/${id}`}>
+                        <img
+                          key={id}
+                          className={style.poster}
+                          src={`${imageBaseUrl}${poster_path}`}
+                          alt={title}
+                        />
+                      </Link>
                     </div>
                   )
                 })}

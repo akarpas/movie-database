@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import MainPage from './MainPage';
+import MoviePage from './MoviePage';
 
 import style from './App.module.scss';
 
@@ -12,6 +13,7 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={MainPage} />
+            <Route path="/:id" component={MoviePage} />
           </Switch>
         </BrowserRouter>
       </div>
