@@ -60,7 +60,7 @@ class MovieList extends Component {
     return (
       <div className={style.container}>
         {isSearch ? <h3>Results:</h3> : <h3>Popular Movies</h3>}
-        {!isSearch && <div className={style.controls}>
+        {!isSearch && movies && <div className={style.controls}>
           <div className={style.control} onClick={e => this.handleClick(e, 'previous')}>
             {!firstPage && 'Previous'}
           </div>
