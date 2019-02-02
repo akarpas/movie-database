@@ -41,8 +41,9 @@ class MovieList extends Component {
   handleClick = (e, direction) => {
     const { page } = this.state;
     const { getPopularMovies } = this.props;
-    getPopularMovies(page + 1);
-    if (direction === 'previous') {
+    const previous = direction === 'previous'
+    getPopularMovies(previous ? page - 1 : page + 1);
+    if (previous) {
       this.setState({ page: page - 1 })
     } else {
       this.setState({ page: page + 1 })
@@ -55,12 +56,17 @@ class MovieList extends Component {
     const lastPage = page === 5;
     const firstPage = page === 1;
     const movies = isSearch ? searchMoviesList : popularMoviesList;
+
     return (
       <div className={style.container}>
         {isSearch ? <h3>Results:</h3> : <h3>Popular Movies</h3>}
         {!isSearch && <div className={style.controls}>
-          {!firstPage && <div className={style.control} onClick={e => this.handleClick(e, 'previous')}>Previous</div>}
-          {!lastPage && <div className={style.control} onClick={e => this.handleClick(e, 'next')}>Next</div>}
+          <div className={style.control} onClick={e => this.handleClick(e, 'previous')}>
+            {!firstPage && 'Previous'}
+          </div>
+          <div className={style.control} onClick={e => this.handleClick(e, 'next')}>
+            {!lastPage && 'Next'}
+          </div>
         </div>}
         {moviesLoading || !movies
           ? (
