@@ -1,5 +1,4 @@
 import React from 'react';
-import App from '../components/App';
 import MainPage from '../components/MainPage';
 import MovieList from '../components/MovieList';
 import { shallow } from 'enzyme';
