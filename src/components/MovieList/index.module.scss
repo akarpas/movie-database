@@ -1,0 +1,45 @@
+.container {
+  font-size: 1.5rem;
+  color: white;
+  padding: 1rem 0;
+}
+
+.movieThumb {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  height: calc(30vh + 10px);
+}
+
+.poster {
+  height: 30vh;
+}
+
+.movies {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.poster:hover {
+  height: calc(30vh + 5px);
+  border: 1px solid white;
+}
+
+.loading {
+  animation: LoadingSpin infinite 20s linear;
+  height: 20vh;
+}
+
+@keyframes LoadingSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
