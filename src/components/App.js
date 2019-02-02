@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import MovieList from './MovieList';
+
 import style from './App.module.scss';
 
 class App extends Component {
@@ -27,6 +29,7 @@ class App extends Component {
             placeholder="search"
           />
         </header>
+        <MovieList searchTerm={inputValue} />
       </div>
     );
   }
