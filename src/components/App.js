@@ -6,7 +6,7 @@ class App extends Component {
     inputValue: '',
   }
 
-  onChange = (e) => {
+  handleChange = (e) => {
     e.preventDefault();
     const { value } = e.target;
     this.setState({ inputValue: value });
@@ -18,7 +18,14 @@ class App extends Component {
     return (
       <div className={style.app}>
         <header className={style.appHeader}>
-          <input className={style.search} value={inputValue} type="input" id="search" placeholder="search" />
+          <input
+            className={style.search}
+            onChange={e => this.handleChange(e)}
+            value={inputValue}
+            type="input"
+            id="search"
+            placeholder="search"
+          />
         </header>
       </div>
     );
