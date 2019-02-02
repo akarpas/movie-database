@@ -35,6 +35,23 @@
   height: 20vh;
 }
 
+.controls {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.control {
+  cursor: pointer;
+  margin: 0 1rem;
+  min-width: 100px;
+}
+
+.control:hover {
+  color: lightgrey;
+}
+
 @keyframes LoadingSpin {
   from {
     transform: rotate(0deg);
