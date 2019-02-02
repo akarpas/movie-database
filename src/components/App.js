@@ -7,18 +7,7 @@ class App extends Component {
     return (
       <div className={style.app}>
         <header className={style.appHeader}>
-          <img src={logo} className={style.appLogo} alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className={style.appLink}
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <input className={style.search} type="input" id="search" placeholder="search" />
         </header>
       </div>
     );
