@@ -12,11 +12,12 @@ import style from './index.module.scss';
 class MovieList extends Component {
   state = {
     isSearch: false,
+    page: 1,
   }
 
   componentDidMount = () => {
     const { getPopularMovies } = this.props;
-    getPopularMovies();
+    getPopularMovies(1);
   }
 
   componentDidUpdate = (nextProps) => {
@@ -37,14 +38,30 @@ class MovieList extends Component {
     });
   }
 
+  handleClick = (e, direction) => {
+    const { page } = this.state;
+    const { getPopularMovies } = this.props;
+    getPopularMovies(page + 1);
+    if (direction === 'previous') {
+      this.setState({ page: page - 1 })
+    } else {
+      this.setState({ page: page + 1 })
+    }
+  }
+
   render() {
     const { moviesLoading, popularMoviesList, searchMoviesList } = this.props;
-    const { isSearch } = this.state;
+    const { isSearch, page } = this.state;
+    const lastPage = page === 5;
+    const firstPage = page === 1;
     const movies = isSearch ? searchMoviesList : popularMoviesList;
-
     return (
       <div className={style.container}>
         {isSearch ? <h3>Results:</h3> : <h3>Popular Movies</h3>}
+        {!isSearch && <div className={style.controls}>
+          {!firstPage && <div className={style.control} onClick={e => this.handleClick(e, 'previous')}>Previous</div>}
+          {!lastPage && <div className={style.control} onClick={e => this.handleClick(e, 'next')}>Next</div>}
+        </div>}
         {moviesLoading || !movies
           ? (
               <div>
@@ -85,7 +102,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getPopularMovies: () => dispatch(getPopularMovies()),
+  getPopularMovies: (page) => dispatch(getPopularMovies(page)),
   searchMovies: (query) => dispatch(searchMovies(query)),
 })
 

@@ -35,6 +35,17 @@
   height: 20vh;
 }
 
+.controls {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.control {
+  margin: 0 1rem;
+}
+
 @keyframes LoadingSpin {
   from {
     transform: rotate(0deg);
