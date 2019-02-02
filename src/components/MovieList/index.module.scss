@@ -3,3 +3,23 @@
   color: white;
   padding: 1rem 0;
 }
+
+.movieThumb {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.poster {
+  height: 30vh;
+}
+
+.movies {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
